@@ -91,6 +91,11 @@ class SqlServer(BaseSQLQueryRunner):
             self._handle_run_query_error(error)
 
         for row in results["rows"]:
+
+            row["table_schema"] = "[{}]".format(row["table_schema"])
+            row["table_name"] = "[{}]".format(row["table_name"])
+            row["column_name"] = "[{}]".format(row["column_name"])
+            
             if row["table_schema"] != self.configuration["db"]:
                 table_name = "{}.{}".format(row["table_schema"], row["table_name"])
             else:
